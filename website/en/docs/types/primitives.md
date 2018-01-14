@@ -2,17 +2,17 @@
 layout: guide
 ---
 
-JavaScript has a number of different primitive types
-([MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)):
+자바스크립트는 여러가지 타입을 가지고 있습니다.
+([MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Data_structures)):
 
 - Booleans
 - Strings
 - Numbers
 - `null`
-- `undefined` (`void` in Flow types)
-- Symbols (new in ECMAScript 2015, not yet supported in Flow)
+- `undefined` (flow에서는 `void`로 취급됩니다.)
+- Symbols (ECMAScript 2015에서 소개되었지만, 현재 지원하지 않습니다.)
 
-The primitive types appear in the language as either literal values.
+기본 타입은 리터럴 값으로 표현되거나
 
 ```js
 true;
@@ -22,7 +22,7 @@ null;
 undefined;
 ```
 
-Or as constructed wrapper objects.
+혹은 동적으로 생성된 래퍼 객체로 표현됩니다.
 
 ```js
 new Boolean(false);
@@ -31,7 +31,7 @@ new Number(42);
 Symbol("foo");
 ```
 
-Types for literal values are lowercase.
+리터럴 값에 대한 타입은 소문자로 표기합니다.
 
 ```js
 // @flow
@@ -42,7 +42,7 @@ function method(x: number, y: string, z: boolean) {
 method(3.14, "hello", true);
 ```
 
-Types for the wrapper objects are capitalized (the same as their constructor).
+래퍼 객체에 대한 타입은 대문자료 표기합니다.
 
 ```js
 // @flow
@@ -53,12 +53,11 @@ function method(x: Number, y: String, z: Boolean) {
 method(new Number(42), new String("world"), new Boolean(false));
 ```
 
-These wrapper objects are rarely used.
+이러한 래퍼 객체는 사실 사용하는 경우가 드뭅니다.
 
 ## Booleans <a class="toc" id="toc-booleans" href="#toc-booleans"></a>
 
-Booleans are `true` and `false` values in JavaScript. The `boolean` type in
-Flow accepts these values.
+Boolean은 자바스크립트에서 `true` and `false` 값을 가집니다. `boolean` 타입은 이러한 값을 허용합니다.
 
 ```js
 // @flow
@@ -71,18 +70,16 @@ acceptsBoolean(false); // Works!
 acceptsBoolean("foo"); // Error!
 ```
 
-JavaScript can also implicitly convert other types of values into booleans.
+자바스크립트는 암시적으로 다른 타입의 값을 boolean으로 변환할 수 있습니다.
 
 ```js
 if (42) {} // 42 => true
 if ("") {} // "" => false
 ```
 
-Flow understands these conversions and will allow any of them as part of an
-`if` statement and other types of expressions.
+flow는 이러한 변환을 이해하고 있어서 `if` 문이나 다른 종류의 표현식의 일부로 이러한 변환을 허용합니다.
 
-Boolean types need you to be explicit by converting non-booleans. You can do
-that with `Boolean(x)` or `!!x`.
+non-boolean을 명시적으로 변환해서 boolean 타입을 얻을 수 있으며 `Boolean(x)` 혹은 `!!x`를 사용하면 됩니다.
 
 ```js
 // @flow
@@ -95,19 +92,14 @@ acceptsBoolean(Boolean(0)); // Works!
 acceptsBoolean(!!0);        // Works!
 ```
 
-Remember that `boolean` and `Boolean` are different types.
+`boolean`과 `Boolean`은 다른 타입이라는 것을 기억하세요.
 
-- A `boolean` is a literal value like `true` or `false` or the result of an
-  expression like `a === b`.
-- A `Boolean` is a wrapper object created by the global `new Boolean(x)`
-  constructor.
+- `boolean` 은 `true`, `false` 혹은 `a === b` 같은 표현식의 결과같은 리터럴 값입니다.
+- `Boolean`은 `new Boolean(x)`을 통해서 생성된 래퍼 객체입니다.
 
 ## Numbers <a class="toc" id="toc-numbers" href="#toc-numbers"></a>
 
-Unlike many other languages, JavaScript only has one type of number. These
-values may appear as `42` or `3.14`. JavaScript also considers `Infinity` and
-`NaN` to be numbers. The `number` type captures everything JavaScript considers
-a number.
+다른 언어와 다르게 자바스크립트는 하나의 숫자 타입만 가지고 있습니다. `42` 혹은 `3.14` 같은 값으로 표현됩니다. 또한 자바스크립트도 `Infinity` 와 `NaN`을 숫자로 취급합니다. `number` 타입은 자바스크립트가 숫자라고 취급하는 모든 것을 포함합니다.
 
 ```js
 // @flow
@@ -122,16 +114,14 @@ acceptsNumber(Infinity); // Works!
 acceptsNumber("foo");    // Error!
 ```
 
-Remember that `number` and `Number` are different types.
+`number`와 `Number`가 다른 타입이라는 것을 기억하세요.
 
-- A `number` is a literal value like `42` or `3.14` or the result of an
-  expression like `parseFloat(x)`.
-- A `Number` is a wrapper object created by the global `new Number(x)` constructor.
+- `number`는 `42`, `3.14` 혹은 `parseFloat(x)`같은 표현식의 결과같은 리터럴 값입니다.
+- `Number`는 `new Number(x)`로 생성된 래퍼 객체입니다.
 
 ## Strings <a class="toc" id="toc-strings" href="#toc-strings"></a>
 
-Strings are `"foo"` values in JavaScript. The `string` type in Flow accepts
-these values.
+String은 자바스크립트에서 `"foo"` 같은 문자열입니다. flow에서 `string` 타입은 이러한 값을 허용합니다.
 
 ```js
 // @flow
@@ -143,15 +133,14 @@ acceptsString("foo"); // Works!
 acceptsString(false); // Error!
 ```
 
-JavaScript implicitly converts other types of values into strings by
-concatenating them.
+자바스크립트에서는 다른 타입의 값을 합치는 경우 암시적으로 값을 문자열로 변환합니다.
 
 ```js
 "foo" + 42; // "foo42"
 "foo" + {}; // "foo[object Object]"
 ```
 
-Flow will only accept strings and number when concatenating them to strings.
+flow는 문자열과 숫자를 합치는 경우만 허용합니다.
 
 ```js
 // @flow
@@ -161,8 +150,7 @@ Flow will only accept strings and number when concatenating them to strings.
 "foo" + [];    // Error!
 ```
 
-You must be explicit and convert other types into strings. You can do this by
-using the String method or using another method for stringifying values.
+다른 타입을 문자열로 변환은 명시적으로 하시여 합니다. 즉, 문자열 관련 함수를 이용해서 문자열을 반환 받아서 합쳐햐 합니다.
 
 ```js
 // @flow
@@ -171,16 +159,14 @@ using the String method or using another method for stringifying values.
 "" + JSON.stringify({}) // Works!
 ```
 
-Remember that `string` and `String` are different types.
+`string`과 `String`은 다른 타입이라는 것을 기억하세요.
 
-- A `string` is a literal value like `"foo"` or the result of an expression
-  like `"" + 42`.
-- A `String` is a wrapper object created by the global `new String(x)` constructor.
+- `string`은 `"foo"` 혹은 `"" + 42` 같은 표현식의 결과 같은 리터럴 값입니다.
+- `String`은 `new String(x)`를 통해서 생성된 래퍼 객체입니다.
 
-## `null` and `void` <a class="toc" id="toc-null-and-void" href="#toc-null-and-void"></a>
+## `null`과 `void` <a class="toc" id="toc-null-and-void" href="#toc-null-and-void"></a>
 
-JavaScript has both `null` and `undefined`. Flow treats these as separate
-types: `null` and `void` (for `undefined`).
+자바스크립트는 `null`과 `undefined`를 가지고 있습니다. flow는 이들을 다른 타입으로 취급합니다: `null`과 `void`(`undefined`와 대응)
 
 ```js
 // @flow
@@ -198,14 +184,13 @@ acceptsUndefined(null);      // Error!
 acceptsUndefined(undefined); // Works!
 ```
 
-`null` and `void` also appear in other types.
+`null`과 `void`는 다른 타입으로 표현됩니다.
 
-### Maybe types <a class="toc" id="toc-maybe-types" href="#toc-maybe-types"></a>
+### Maybe 타입 <a class="toc" id="toc-maybe-types" href="#toc-maybe-types"></a>
 
-Maybe types are for places where a value is optional and you can create them by
-adding a question mark in front of the type such as `?string` or `?number`.
+Maybe 타입은 값이 선택적인 곳에서 사용됩니다. 그리고 `?string` 혹은 `?number`처럼 타입의 앞에 물음표를 더함으로써 생성할 수 있습니다.
 
-In addition to the `type` in `?type`, maybe types can also be `null` or `void`.
+`?type`은 `type` 이거나 `null` 혹은 `void`가 될 수 있습니다.
 
 ```js
 // @flow
@@ -219,17 +204,15 @@ acceptsMaybeString(null);      // Works!
 acceptsMaybeString();          // Works!
 ```
 
-### Optional object properties <a class="toc" id="toc-optional-object-properties" href="#toc-optional-object-properties"></a>
+### 선택적 객체 프로퍼티 <a class="toc" id="toc-optional-object-properties" href="#toc-optional-object-properties"></a>
 
-Object types can have optional properties where a question mark `?` comes after
-the property name.
+객체 타입은 프로퍼티 이름 뒤에 `?`를 붙여서 선택적으로 프로퍼티를 가질 수 있습니다. 
 
 ```js
 { propertyName?: string }
 ```
 
-In addition to their set value type, these optional properties can either be
-`void` or omitted altogether. However, they cannot be `null`.
+이들 선택적 파마리터는 `void`이거나 생략될수는 있지만 `null`이 될 수는 없습니다.
 
 ```js
 // @flow
@@ -243,17 +226,15 @@ acceptsObject({ foo: null });      // Error!
 acceptsObject({});                 // Works!
 ```
 
-### Optional function parameters <a class="toc" id="toc-optional-function-parameters" href="#toc-optional-function-parameters"></a>
+### 선택적 함수 파라미터 <a class="toc" id="toc-optional-function-parameters" href="#toc-optional-function-parameters"></a>
 
-Functions can have optional parameters where a question mark `?` comes after
-the parameter name.
+함수는 파라미터 이름 뒤에 `?`를 붙은 선택적 파마리터를 가질 수 있습니다.
 
 ```js
 function method(param?: string) { /* ... */ }
 ```
 
-In addition to their set type, these optional parameters can either be `void`
-or omitted altogether. However, they cannot be `null`.
+이들 선택적 파마리터는 `void`이거나 생략될수는 있지만 `null`이 될 수는 없습니다.
 
 ```js
 // @flow
@@ -267,17 +248,16 @@ acceptsOptionalString(null);      // Error!
 acceptsOptionalString();          // Works!
 ```
 
-### Function parameters with defaults <a class="toc" id="toc-function-parameters-with-defaults" href="#toc-function-parameters-with-defaults"></a>
+### 함수 파라미터의 초기값 <a class="toc" id="toc-function-parameters-with-defaults" href="#toc-function-parameters-with-defaults"></a>
 
-Function parameters can also have defaults. This is a feature of ECMAScript
-2015.
+
+또한 함수 파라미터는 초기값을 가질 수 있습니다. 이건 ECMAScript 2015에 포함된 기능입니다.
 
 ```js
 function method(value: string = "default") { /* ... */ }
 ```
 
-In addition to their set type, default parameters can also be `void` or omitted
-altogether. However, they cannot be `null`.
+초기 파라미터는 `void`이거나 생략될 수는 있지만 `null`이 될 수는 없습니다.
 
 ```js
 // @flow
@@ -293,8 +273,7 @@ acceptsOptionalString();          // Works!
 
 ## Symbols <a class="toc" id="toc-symbols" href="#toc-symbols"></a>
 
-Symbols are not currently supported by Flow. You can see these two issues for
-more information:
+Symbol은 현재 flow에서 지원되지 않습니다. 관련된 정보는 아래 두 이슈에서 확인하실 수 있습니다:
 
 - [facebook/flow#810](https://github.com/facebook/flow/issues/810)
 - [facebook/flow#1015](https://github.com/facebook/flow/issues/1015)
