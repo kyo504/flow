@@ -2,13 +2,11 @@
 layout: guide
 ---
 
-Adding type annotations is an important part of your interaction with Flow.
+타입 어노테이션은 flow를 사용하는데 있어서 중요한 부분입니다.
 
-Flow has a powerful ability to infer the types of your programs. The majority
-of your code can rely on it. Still, there are places where you'll want to add
-types.
+flow는 프로그램의 타입을 추론하는 강력한 능력을 가집니다. 여러분의 코드가 이러한 flow의 추론 능력으로 타입이 추론될 수 있지만 여전히 타입을 지정을 해야하는 곳들이 있을 수 있습니다.
 
-Imagine the following `concat` function for concatenating two strings together.
+아래의 `concat` 함수를 이용해서 두 개의 문자열을 합친다고 생각해봅시다.
 
 ```js
 function concat(a, b) {
@@ -16,21 +14,19 @@ function concat(a, b) {
 }
 ```
 
-When you use this function, Flow knows exactly what is going on.
+이 함수를 사용할 때, flow는 추론을 통해서 무슨 일이 일어나는지를 알고 있습니다.
 
 ```js
 concat("A", "B"); // Works!
 ```
 
-However, you can use the `+` operator on strings or numbers, so this would also
-be valid.
+하지만, 문자열간 혹은 숫자간애는 `+` 연산을 사용할 수 있습니다. 그래서 아래 코드도 유효합니다.
 
 ```js
 concat(1, 2); // Works!
 ```
 
-But supposed you only want to allow strings in your function. For that you can
-add types.
+하지만 해당 함수가 함수의 인자로 문자열만 허용하길 원한다면 타입을 추가할 수 있습니다.
 
 ```js
 function concat(a: string, b: string) {
@@ -38,7 +34,7 @@ function concat(a: string, b: string) {
 }
 ```
 
-Now you'll get a warning from Flow if you try to use numbers.
+이제 여러분은 설정한 문자열이 아닌 숫자를 인자로 전달하게 될 경우 경고 메세지가 출력됩니다.
 
 ```js
 // @flow
@@ -50,8 +46,6 @@ concat("A", "B"); // Works!
 concat(1, 2); // Error!
 ```
 
-Setting up "boundaries" with your types means you can tell Flow your intent on
-top of the inference it already does.
+타입으로 `경계`를 설정하는 것은 flow에게 미리 정의된 추론 위에서 여러분의 의도가 무엇인지 알려주는 것을 의미합니다.
 
-This guide will teach you the syntax and semantics of all the different types
-you can have in Flow.
+이 가이드는 flow에서 사용할 수 있는 모든 타입에 대한 문법과 의미를 알려줄 것입니다.
